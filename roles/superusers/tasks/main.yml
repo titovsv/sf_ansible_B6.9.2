@@ -5,8 +5,8 @@
     name: superusers
     state: present
 
-- name: Validate the sudoers file before saving
-  ansible.builtin.lineinfile:
+- name: add superusers in sudoers and validate file
+  lineinfile:
     path: /etc/sudoers
     state: present
     line: '%superusers ALL=(ALL:ALL) ALL'
