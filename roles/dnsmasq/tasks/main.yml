@@ -1,0 +1,19 @@
+---
+# tasks file for dnsmasq
+- name: install package
+  apt:
+    name: dnsmasq
+    state: latest
+
+- name: apply template config
+  template:
+    src: dnsmasq.j2
+    dest: /etc/dnsmasq.d/dnsmasq.conf  
+  notify:
+    - restart service
+
+- name: start service
+  service:
+    name: dnsmasq
+    state: started
+    enabled: yes

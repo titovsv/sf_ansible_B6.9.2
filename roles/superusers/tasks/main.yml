@@ -1,0 +1,26 @@
+---
+# tasks file for superusers
+- name: create group named superusers
+  group:
+    name: superusers
+    state: present
+
+- name: Validate the sudoers file before saving
+  ansible.builtin.lineinfile:
+    path: /etc/sudoers
+    state: present
+    line: '%superusers ALL=(ALL:ALL) ALL'
+    validate: /usr/sbin/visudo -cf %s
+
+- name: create user2
+  user:
+    name: user2
+    groups: superusers
+    append: yes
+
+- name: create user3
+  user:
+    name: user3
+    groups: superusers
+    append: yes
+
