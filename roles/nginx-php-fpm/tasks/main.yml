@@ -12,4 +12,28 @@
     pkgs:
       - php-fpm
       - nginx
-  
+
+- name: create catalog
+  file:
+    path: /opt/nginx/ansible
+    state: directory
+    mode: '0755'
+    owner: www-data
+    group: www-data
+
+- name: copy index.php
+  copy:
+    src: index.php
+    dest: /opt/nginx/ansible/index.php
+    owner: www-data
+    group: www-data
+    mode: '0644'
+
+- name: replace default config nginx
+  copy:
+    src: default
+    dest: /etc/nginx/sites-available/default
+    owner: root
+    group: root
+  notify:
+    - restart nginx 
